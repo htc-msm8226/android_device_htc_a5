@@ -24,4 +24,23 @@ TARGET_SCREEN_WIDTH := 720
 # Init
 PRODUCT_PACKAGES += \
     fstab.qcom \
-    init.recovery.qcom.rc
+    init.htc.audio.sh \
+    init.network.sh \
+    init.power.rc \
+    init.project.rc \
+    init.qcom.audio.sh \
+    init.qcom.class_core.sh \
+    init.qcom.early_boot.sh \
+    init.qcom.factory.sh \
+    init.qcom.firmware_links.sh \
+    init.qcom.post_boot.sh \
+    init.qcom.rc \
+    init.qcom.sh \
+    init.qcom.ssr.sh \
+    init.qcom.syspart_fixup.sh \
+    init.qcom.wifi.sh \
+    init.recovery.qcom.rc \
+    init.ril.rc \
+    init.target.rc \
+    init.trace.rc \
+    init.usbdiag.sh
