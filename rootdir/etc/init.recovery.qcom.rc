@@ -1,0 +1,2 @@
+on init
+    symlink /dev/block/platform/msm_sdcc.1/by-name /dev/block/by-name

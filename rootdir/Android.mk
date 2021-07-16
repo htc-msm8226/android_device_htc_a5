@@ -14,14 +14,18 @@
 # limitations under the License.
 #
 
-## Device Path
-DEVICE_PATH := device/htc/a5
+LOCAL_PATH := $(call my-dir)
 
-# Display
-TARGET_SCREEN_HEIGHT := 1280
-TARGET_SCREEN_WIDTH := 720
+include $(CLEAR_VARS)
+LOCAL_MODULE := fstab.qcom
+LOCAL_SRC_FILES := etc/fstab.qcom
+LOCAL_MODULE_CLASS := ETC
+LOCAL_MODULE_PATH := $(TARGET_ROOT_OUT)
+include $(BUILD_PREBUILT)
 
-# Init
-PRODUCT_PACKAGES += \
-    fstab.qcom \
-    init.recovery.qcom.rc
+include $(CLEAR_VARS)
+LOCAL_MODULE := init.recovery.qcom.rc
+LOCAL_SRC_FILES := etc/init.recovery.qcom.rc
+LOCAL_MODULE_CLASS := ETC
+LOCAL_MODULE_PATH := $(TARGET_RECOVERY_OUT)/root
+include $(BUILD_PREBUILT)
