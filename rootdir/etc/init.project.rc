@@ -163,23 +163,12 @@ on post-fs
 on fs
     mkdir /devlog 0700 root root
     mkdir /fataldevlog 0700 root root
-    wait /dev/block/platform/msm_sdcc.1/by-name/system
-    mount ext4 emmc@system /system ro noatime barrier=1
+    mkdir /firmware/image 0771 system system
+    mkdir /firmware/radio 0771 system system
+    mkdir /firmware/adsp 0771 system system
+    mkdir /firmware/wcnss 0771 system system
 
     mount_all fstab.qcom
-
-    wait /dev/block/bootdevice/by-name/cache
-    mount ext4 /dev/block/bootdevice/by-name/cache /cache nosuid nodev barrier=1
-
-    mkdir /devlog 0700 root root
-    wait /dev/block/bootdevice/by-name/devlog
-    e2fsck emmc@devlog
-    mount ext4 emmc@devlog /devlog nosuid nodev barrier=1,errors=continue
-
-    mkdir /fataldevlog 0700 root root
-    wait /dev/block/bootdevice/by-name/fataldevlog
-    e2fsck emmc@fataldevlog
-    mount ext4 emmc@fataldevlog /fataldevlog nosuid nodev barrier=1,errors=continue
 
     # zRAM swap (must use after mount_all)
     swapon_all /etc/fstab.swap
@@ -189,25 +178,13 @@ on fs
     mount vfat emmc@reserve /ramdump rw
     umount /ramdump
 
-    # For linking firmware image
-    mkdir /firmware/image 0771 system system
-
     # Mount radio image and link to /firmware/image
-    mkdir /firmware/radio 0771 system system
-    wait /dev/block/platform/msm_sdcc.1/by-name/radio
-    mount vfat /dev/block/platform/msm_sdcc.1/by-name/radio /firmware/radio ro shortname=lower,uid=1000,gid=1000,dmask=227,fmask=337
     exec /system/bin/sh /init.qcom.firmware_links.sh /firmware/radio /firmware/image "modem* mba*"
 
     # Mount adsp image and link to /firmware/image
-    mkdir /firmware/adsp 0771 system system
-    wait /dev/block/platform/msm_sdcc.1/by-name/adsp
-    mount vfat /dev/block/platform/msm_sdcc.1/by-name/adsp /firmware/adsp ro shortname=lower,uid=1000,gid=1000,dmask=227,fmask=337
     exec /system/bin/sh /init.qcom.firmware_links.sh /firmware/adsp/image /firmware/image "adsp*"
 
     # Mount wcnss image and link to /firmware/image
-    mkdir /firmware/wcnss 0771 system system
-    wait /dev/block/platform/msm_sdcc.1/by-name/wcnss
-    mount vfat /dev/block/platform/msm_sdcc.1/by-name/wcnss /firmware/wcnss ro shortname=lower,uid=1000,gid=1000,dmask=227,fmask=337
     exec /system/bin/sh /init.qcom.firmware_links.sh /firmware/wcnss /firmware/image "wcnss*"
 
 	# QSEE secure application : keymaster
